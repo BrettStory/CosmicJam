@@ -6,4 +6,6 @@
 
 ### Refactors
 
+* Color scheme updated to teal.
+
 ### Fixes
