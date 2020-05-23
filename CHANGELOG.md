@@ -4,6 +4,8 @@
 
 ### Features
 
+* New CosmicJam icon introduced.
+
 ### Refactors
 
 * Color scheme updated to teal.
