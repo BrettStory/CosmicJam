@@ -1,0 +1,3 @@
+[submodule "Wpf"]
+	path = Wpf
+	url = git@github.com:BrettStory/Macabre2D.Wpf.git
