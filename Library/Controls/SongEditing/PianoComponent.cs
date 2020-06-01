@@ -1,7 +1,6 @@
 ﻿namespace CosmicJam.Library.Controls.SongEditing {
 
     using Macabre2D.Framework;
-    using Macabre2D.Wpf.MonoGameIntegration;
     using Microsoft.Xna.Framework.Input;
     using System;
     using System.Collections.Generic;
@@ -27,11 +26,11 @@
             this._componentChildrenChangedHandler = new NotifyCollectionChangedEventHandler(this.Component_ChildrenChanged);
         }
 
-        public void Update(FrameTime frameTime, MouseState mouseState, KeyboardState keyboardState) {
-            var mouseWorldPosition = this._camera.ConvertPointFromScreenSpaceToWorldSpace(mouseState.Position);
+        public void Update(FrameTime frameTime, InputState inputState) {
+            var mouseWorldPosition = this._camera.ConvertPointFromScreenSpaceToWorldSpace(inputState.CurrentMouseState.Position);
             var isHandled = false;
             if (this._currentClickable != null) {
-                if (mouseState.LeftButton == ButtonState.Pressed) {
+                if (inputState.CurrentMouseState.LeftButton == ButtonState.Pressed) {
                     isHandled = this._currentClickable.TryHoldClick(mouseWorldPosition);
                 }
                 else {
@@ -41,7 +40,7 @@
                 }
             }
 
-            if (!isHandled && mouseState.LeftButton == ButtonState.Pressed) {
+            if (!isHandled && inputState.CurrentMouseState.LeftButton == ButtonState.Pressed) {
                 this._clickables.RebuildCache();
                 foreach (var clickable in this._clickables) {
                     if (clickable.TryClick(mouseWorldPosition)) {
@@ -53,8 +52,6 @@
 
             this._pianoRoll.Buffer(0.8f);
         }
-
-        public void Update(FrameTime frameTime) => this.Update(frameTime, MonoGameMouse.Instance.GetState(), MonoGameKeyboard.Instance.GetState());
 
         protected override void Initialize() {
             var pitches = Enum.GetValues(typeof(Pitch)).Cast<Pitch>().OrderBy(x => x).ToList();

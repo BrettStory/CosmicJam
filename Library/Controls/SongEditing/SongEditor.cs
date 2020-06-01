@@ -12,6 +12,7 @@
     public class SongEditor : MonoGameViewModel, IGame {
         private readonly Camera _camera;
         private readonly IPianoRoll _pianoRoll = ViewContainer.Resolve<IPianoRoll>();
+        private InputState _currentInputState;
         private FrameTime _frameTime;
         private bool _isContentLoaded = false;
         private bool _isInitialized = false;
@@ -124,8 +125,9 @@
         }
 
         public override void Update(GameTime gameTime) {
+            this._currentInputState = new InputState(MonoGameMouse.Instance.GetState(), MonoGameKeyboard.Instance.GetState(), this._currentInputState);
             this._frameTime = new FrameTime(gameTime, this.GameSpeed);
-            this.CurrentScene.Update(this._frameTime);
+            this.CurrentScene.Update(this._frameTime, this._currentInputState);
         }
     }
 }

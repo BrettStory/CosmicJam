@@ -1,7 +1,7 @@
 ﻿namespace CosmicJam.Library.Controls.SongEditing {
 
-    using Macabre2D.Framework;
     using CosmicJam.Library.Services;
+    using Macabre2D.Framework;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Audio;
     using System.Collections.Generic;
@@ -83,9 +83,7 @@
 
         public void PlayNote(Frequency frequency) {
             if (!this._activeVoices.ContainsKey(frequency)) {
-                var voice = this._voicePool.GetNext();
-                voice.SamplesPerBuffer = this.SamplesPerBuffer;
-                voice.Reinitialize(this.Song, this.Track, new NoteInstance(0, 1, 1f, frequency));
+                var voice = this._voicePool.GetNext(this.Song, this.Track, new NoteInstance(0, 1, 1f, frequency), 0f);
                 voice.OnFinished += this.Voice_OnFinished;
                 this._activeVoices.Add(frequency, voice);
 
