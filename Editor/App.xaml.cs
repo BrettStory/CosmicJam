@@ -1,11 +1,11 @@
 ﻿namespace CosmicJam.Editor {
+
+    using CosmicJam.Editor.Properties;
+    using CosmicJam.Editor.Views;
+    using CosmicJam.Library.Services;
     using log4net;
     using Macabre2D.Wpf.Common;
     using Macabre2D.Wpf.Common.Services;
-    using CosmicJam.Editor.Properties;
-    using CosmicJam.Editor.Views;
-    using CosmicJam.Library.Controls.SongEditing;
-    using CosmicJam.Library.Services;
     using System;
     using System.Linq;
     using System.Reflection;
@@ -87,7 +87,6 @@
             this._container.RegisterType<IValueEditorService, ValueEditorService>(new ContainerControlledLifetimeManager());
             this._container.RegisterType<ICommonDialogService, CommonDialogService>(new ContainerControlledLifetimeManager());
             this._container.RegisterType<ISongService, SongService>(new ContainerControlledLifetimeManager());
-            this._container.RegisterType<IPianoRoll, PianoRoll>(new ContainerControlledLifetimeManager());
         }
 
         private void SaveSettings() {
