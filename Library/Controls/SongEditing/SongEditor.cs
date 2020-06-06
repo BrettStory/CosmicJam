@@ -1,5 +1,6 @@
 ﻿namespace CosmicJam.Library.Controls.SongEditing {
 
+    using CosmicJam.Library.Services;
     using Macabre2D.Framework;
     using Macabre2D.Wpf.MonoGameIntegration;
     using Microsoft.Xna.Framework;
@@ -15,22 +16,30 @@
         private static readonly Point PianoKeySpriteSize = new Point(32, 16);
         private static readonly Point WhitePressedKeySpriteLocation = new Point(0, 48);
         private static readonly Point WhiteUnpressedKeySpriteLocation = new Point(0, 16);
+        private readonly Sprite _blackKeyPressed;
+        private readonly Sprite _blackKeyUnpressed;
         private readonly Camera _camera;
+        private readonly ISongService _songService;
+        private readonly Sprite _whiteKeyPressed;
+        private readonly Sprite _whiteKeyUnpressed;
         private InputState _currentInputState;
         private FrameTime _frameTime;
         private bool _isContentLoaded = false;
         private bool _isInitialized = false;
         private LiveSongPlayer _liveSongPlayer;
+        private PianoComponent _pianoComponent;
         private Point _viewportSize;
 
-        public SongEditor() : base() {
+        public SongEditor(ISongService songService) : base() {
+            this._songService = songService;
+
             this.Settings = new GameSettings() {
                 PixelsPerUnit = 16
             };
 
             GameSettings.Instance = this.Settings;
             MacabreGame.Instance = this;
-            this.AssetManager.SetMapping(Guid.NewGuid(), SpriteSheetPath);
+
             this.CurrentScene = new Scene {
                 BackgroundColor = Color.Black
             };
@@ -39,6 +48,13 @@
             this._camera.ViewHeight = 36f;
             this._camera.OffsetSettings.OffsetType = PixelOffsetType.BottomLeft;
             this._camera.LocalPosition = Vector2.Zero;
+
+            this.AssetManager.SetMapping(Guid.NewGuid(), SpriteSheetPath);
+            var spriteSheetId = this.AssetManager.GetId(SpriteSheetPath);
+            this._blackKeyUnpressed = new Sprite(spriteSheetId, BlackUnpressedKeySpriteLocation, PianoKeySpriteSize);
+            this._blackKeyPressed = new Sprite(spriteSheetId, BlackPressedKeySpriteLocation, PianoKeySpriteSize);
+            this._whiteKeyUnpressed = new Sprite(spriteSheetId, WhiteUnpressedKeySpriteLocation, PianoKeySpriteSize);
+            this._whiteKeyPressed = new Sprite(spriteSheetId, WhitePressedKeySpriteLocation, PianoKeySpriteSize);
         }
 
         public event EventHandler<double> GameSpeedChanged;
@@ -96,17 +112,10 @@
 
         public override void Initialize(MonoGameKeyboard keyboard, MonoGameMouse mouse) {
             base.Initialize(keyboard, mouse);
-            FrameworkDispatcher.Update();
             this.SpriteBatch = new SpriteBatch(this.GraphicsDevice);
             this.AssetManager.Initialize(this.Content);
-            this._liveSongPlayer = new LiveSongPlayer(new Song());
-            var spriteSheetId = this.AssetManager.GetId(SpriteSheetPath);
-            var blackKeyUnpressed = new Sprite(spriteSheetId, BlackUnpressedKeySpriteLocation, PianoKeySpriteSize);
-            var blackKeyPressed = new Sprite(spriteSheetId, BlackPressedKeySpriteLocation, PianoKeySpriteSize);
-            var whiteKeyUnpressed = new Sprite(spriteSheetId, WhiteUnpressedKeySpriteLocation, PianoKeySpriteSize);
-            var whiteKeyPressed = new Sprite(spriteSheetId, WhitePressedKeySpriteLocation, PianoKeySpriteSize);
-            this.CurrentScene.AddChild(new PianoComponent(this._liveSongPlayer, whiteKeyUnpressed, whiteKeyPressed, blackKeyUnpressed, blackKeyPressed));
-
+            this._songService.PropertyChanged += this.SongService_PropertyChanged;
+            this.ResetPianoRoll();
             this.CurrentScene.Initialize();
             this._isInitialized = true;
         }
@@ -140,6 +149,31 @@
             this._currentInputState = new InputState(MonoGameMouse.Instance.GetState(), MonoGameKeyboard.Instance.GetState(), this._currentInputState);
             this._frameTime = new FrameTime(gameTime, this.GameSpeed);
             this.CurrentScene.Update(this._frameTime, this._currentInputState);
+        }
+
+        protected override void Dispose(bool disposing) {
+            base.Dispose(disposing);
+
+            if (disposing) {
+                this._songService.PropertyChanged -= this.SongService_PropertyChanged;
+            }
+        }
+
+        private void ResetPianoRoll() {
+            if (this._pianoComponent != null) {
+                this.CurrentScene.RemoveComponent(this._pianoComponent);
+            }
+
+            FrameworkDispatcher.Update();
+            this._liveSongPlayer = new LiveSongPlayer(this._songService.CurrentSong);
+            this._pianoComponent = new PianoComponent(this._liveSongPlayer, this._whiteKeyUnpressed, this._whiteKeyPressed, this._blackKeyUnpressed, this._blackKeyPressed);
+            this.CurrentScene.AddChild(this._pianoComponent);
+        }
+
+        private void SongService_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
+            if (e.PropertyName == nameof(ISongService.CurrentSong)) {
+                this.ResetPianoRoll();
+            }
         }
     }
 }
