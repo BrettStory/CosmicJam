@@ -167,6 +167,7 @@
             FrameworkDispatcher.Update();
             this._liveSongPlayer = new LiveSongPlayer(this._songService.CurrentSong);
             this._pianoComponent = new PianoComponent(this._liveSongPlayer, this._whiteKeyUnpressed, this._whiteKeyPressed, this._blackKeyUnpressed, this._blackKeyPressed);
+            this._pianoComponent.SamplesPerBuffer = 1000;
             this.CurrentScene.AddChild(this._pianoComponent);
         }
 
