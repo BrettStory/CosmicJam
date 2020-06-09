@@ -2,7 +2,7 @@
                    x:Name="_mainWindow"
                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                   xmlns:converters="clr-namespace:Macabre2D.Wpf.Common.Converters;assembly=Macabre2D.Wpf.Common"
+                   xmlns:common="http//schemas.macabre2d.com/xaml/common"
                    xmlns:local="clr-namespace:CosmicJam.Editor.Views"
                    xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
                    xmlns:system="clr-namespace:System;assembly=mscorlib"
@@ -10,12 +10,12 @@
                    Style="{StaticResource StandardWindowStyle}"
                    WindowState="Maximized">
     <metro:MetroWindow.Resources>
-        <converters:BoolToVisibilityConverter x:Key="_boolToVisibilityConverter" />
-        <converters:InverseBoolConverter x:Key="_inverseBoolConverter" />
-        <converters:NullToBoolConverter x:Key="_nullToBoolConverter" />
-        <converters:NullToVisibilityConverter x:Key="_nullToVisibilityConverter" />
-        <converters:HyphenateTextConverter x:Key="_hyphenateTextConverter" />
-        <converters:EqualityToVisibilityConverter x:Key="_equalityToVisibilityConverter" />
+        <common:BoolToVisibilityConverter x:Key="_boolToVisibilityConverter" />
+        <common:InverseBoolConverter x:Key="_inverseBoolConverter" />
+        <common:NullToBoolConverter x:Key="_nullToBoolConverter" />
+        <common:NullToVisibilityConverter x:Key="_nullToVisibilityConverter" />
+        <common:HyphenateTextConverter x:Key="_hyphenateTextConverter" />
+        <common:EqualityToVisibilityConverter x:Key="_equalityToVisibilityConverter" />
         <system:String x:Key="_cosmicSynth">Cosmic Synth</system:String>
     </metro:MetroWindow.Resources>
     <metro:MetroWindow.TitleTemplate>

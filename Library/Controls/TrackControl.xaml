@@ -2,9 +2,9 @@
              x:Name="_trackControls"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:converters="clr-namespace:Macabre2D.Wpf.Common.Converters;assembly=Macabre2D.Wpf.Common">
+             xmlns:common="http//schemas.macabre2d.com/xaml/common">
     <UserControl.Resources>
-        <converters:BoolToVisibilityConverter x:Key="_boolToVisibilityConverter" />
+        <common:BoolToVisibilityConverter x:Key="_boolToVisibilityConverter" />
     </UserControl.Resources>
     <ScrollViewer DataContext="{Binding ElementName=_trackControls}"
                   HorizontalScrollBarVisibility="Disabled"
