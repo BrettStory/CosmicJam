@@ -14,12 +14,12 @@
             <Button Command="{Binding AddCommand}"
                     ToolTip="Adds a new track.">
                 <iconPacks:PackIconMaterial Kind="Plus"
-                                            Foreground="{StaticResource BlackBrush}" />
+                                            Foreground="{StaticResource MahApps.Brushes.Text}" />
             </Button>
             <Button Command="{Binding RemoveCommand}"
                     ToolTip="Removes the track.">
                 <iconPacks:PackIconMaterial Kind="Minus"
-                                            Foreground="{StaticResource BlackBrush}" />
+                                            Foreground="{StaticResource MahApps.Brushes.Text}" />
             </Button>
         </StackPanel>
 
