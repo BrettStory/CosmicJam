@@ -9,7 +9,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
 
                 <!-- Accent and AppTheme setting -->
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Dark.Teal.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Themes/CosmicTheme.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.IconPacks.Material;component/Themes/PackIconMaterial.xaml" />
 
                 <ResourceDictionary Source="pack://application:,,,/Macabre2D.Wpf.Resources;component/Themes/Default/Styles/Margins.xaml" />

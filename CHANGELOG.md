@@ -9,5 +9,6 @@
 ### Refactors
 
 * Color scheme updated to teal.
+* Updated white color in editor to be more of a bone color.
 
 ### Fixes

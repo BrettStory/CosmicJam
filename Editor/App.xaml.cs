@@ -1,11 +1,13 @@
 ﻿namespace CosmicJam.Editor {
 
+    using ControlzEx.Theming;
     using CosmicJam.Editor.Properties;
     using CosmicJam.Editor.Views;
     using CosmicJam.Library.Services;
     using log4net;
     using Macabre2D.Wpf.Common;
     using Macabre2D.Wpf.Common.Services;
+    using MahApps.Metro.Theming;
     using System;
     using System.Linq;
     using System.Reflection;
@@ -19,6 +21,8 @@
         private MainWindow _mainWindow;
         private SettingsManager _settingsManager;
 
+        internal static Theme CurrentTheme { get; private set; }
+
         protected override void OnExit(ExitEventArgs e) {
             Settings.Default.ClosedSuccessfully = e.ApplicationExitCode == 0;
             this.SaveSettings();
@@ -26,6 +30,9 @@
         }
 
         protected override void OnStartup(StartupEventArgs e) {
+            CurrentTheme = ThemeManager.Current.AddLibraryTheme(new LibraryTheme(new Uri("pack://application:,,,/Themes/CosmicTheme.xaml"), MahAppsLibraryThemeProvider.DefaultInstance));
+            ThemeManager.Current.ChangeTheme(this, CurrentTheme);
+
             base.OnStartup(e);
             ViewContainer.Instance = this._container;
 
@@ -35,7 +42,7 @@
         }
 
         private void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e) {
-            this._loggingService.LogError(e.Exception?.Message ?? $"Macabre2D crashed for unknown reasons, but here's the stack trace: {Environment.NewLine}{Environment.StackTrace}");
+            this._loggingService.LogError(e.Exception?.Message ?? $"Cosmic Jam crashed for unknown reasons, but here's the stack trace: {Environment.NewLine}{Environment.StackTrace}");
             Settings.Default.ClosedSuccessfully = false;
             this.SaveSettings();
         }
