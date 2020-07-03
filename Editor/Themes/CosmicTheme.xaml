@@ -8,8 +8,8 @@
 
     <!--  Metadata  -->
     <system:String x:Key="Theme.Name">Macabre.Cosmic</system:String>
-    <system:String x:Key="Theme.Origin">Macabre2D.Editor</system:String>
-    <system:String x:Key="Theme.DisplayName">Macabre2D</system:String>
+    <system:String x:Key="Theme.Origin">Coasmic Jam</system:String>
+    <system:String x:Key="Theme.DisplayName">Coasmic Jam</system:String>
     <system:String x:Key="Theme.BaseColorScheme">Macabre</system:String>
     <system:String x:Key="Theme.ColorScheme">Cosmic</system:String>
     <Color x:Key="Theme.PrimaryAccentColor">#FF356C77</Color>

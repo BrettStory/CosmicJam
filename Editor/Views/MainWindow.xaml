@@ -30,8 +30,25 @@
                       VerticalAlignment="Center">
                     <MenuItem Header="_File"
                               Background="{Binding Path=Parent.Background, RelativeSource={RelativeSource Self}}"
-                              Padding="{StaticResource StandardMarginLR}"
+                              Padding="{StaticResource StandardMarginR}"
                               PreviewMouseDoubleClick="MenuItem_PreviewMouseDoubleClick">
+                        <MenuItem Header="_New"
+                                  Background="{Binding Path=Parent.Background, RelativeSource={RelativeSource Self}}"
+                                  Command="{Binding DataContext.NewCommand, ElementName=_mainWindow}" />
+                        <MenuItem Header="_Load"
+                                  Background="{Binding Path=Parent.Background, RelativeSource={RelativeSource Self}}"
+                                  Command="{Binding DataContext.LoadCommand, ElementName=_mainWindow}" />
+                        <Separator />
+
+                        <MenuItem Header="_Save"
+                                  Background="{Binding Path=Parent.Background, RelativeSource={RelativeSource Self}}"
+                                  Command="{Binding DataContext.SaveCommand, ElementName=_mainWindow}" />
+                        <MenuItem Header="Save As..."
+                                  Background="{Binding Path=Parent.Background, RelativeSource={RelativeSource Self}}"
+                                  Command="{Binding DataContext.SaveAsCommand, ElementName=_mainWindow}" />
+
+                        <Separator />
+
                         <MenuItem Header="_Exit"
                                   Background="{Binding Path=Parent.Background, RelativeSource={RelativeSource Self}}"
                                   Click="Exit_Click" />

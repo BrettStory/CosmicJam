@@ -5,6 +5,7 @@
 ### Features
 
 * New CosmicJam icon introduced.
+* Added the ability to save and load songs.
 
 ### Refactors
 
